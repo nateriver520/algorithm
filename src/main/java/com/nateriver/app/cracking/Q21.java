@@ -30,8 +30,8 @@ public class Q21 {
             }
             else{
                 map.put(nextNode.value,1);
-                node = node.next;
             }
+            node = node.next;
         }
     }
 
