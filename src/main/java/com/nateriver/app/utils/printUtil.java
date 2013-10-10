@@ -1,5 +1,7 @@
 package com.nateriver.app.utils;
 
+import com.nateriver.app.models.SingleLink;
+
 /**
  * Created with IntelliJ IDEA.
  * User: yangshuo
@@ -16,4 +18,20 @@ public class PrintUtil {
             System.out.println();
         }
     }
+
+    public static void printSingleLink(SingleLink head){
+        if (head ==null || head.next ==null)
+            return;
+        SingleLink node = head;
+        while (node.next != null){
+            SingleLink nextNode = node.next;
+            System.out.print(nextNode.value);
+            System.out.print(" => ");
+            node = node.next;
+        }
+
+        System.out.println();
+
+    }
+
 }
