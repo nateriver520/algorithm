@@ -1,6 +1,7 @@
 package com.nateriver.app.cracking;
 
 import com.nateriver.app.models.SingleLink;
+import com.nateriver.app.utils.Builder;
 import com.nateriver.app.utils.PrintUtil;
 
 import java.util.HashMap;
@@ -60,17 +61,7 @@ public class Q21 {
     }
 
     public static void main(String[] args) {
-        SingleLink head = new SingleLink();
-        SingleLink node = head;
-        String[] values = new String[]{"a","b","c","c","a","d","a"};
-        for(String value : values ){
-            SingleLink tempNode = new SingleLink();
-            tempNode.value = value;
-
-            node.next = tempNode;
-            node = node.next;
-            node.next = null;
-        }
+        SingleLink head = Builder.singleLinkBuilder(new String[]{"a","b","c","c","a","d","a"});
 
         PrintUtil.printSingleLink(head);
         removeDuplicateLink1(head);
