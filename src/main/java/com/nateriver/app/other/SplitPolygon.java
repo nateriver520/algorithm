@@ -16,13 +16,14 @@ public class SplitPolygon {
         double target = oneDistance;
         for(int i = 0; i < points.size(); i++){
             Point cur = points.get(i);
-            Point next = i+1 > points.size() ? points.get(0) : points.get(i+1);
+            Point next = i+1 >= points.size() ? points.get(0) : points.get(i+1);
 
             Point p = getPointBetweenPointAB(cur,next,target);
 
             while (p != null){
                target = oneDistance;
                res.add(p);
+               cur = p;
                p = getPointBetweenPointAB(p,next,target);
             }
 
@@ -38,16 +39,18 @@ public class SplitPolygon {
             return null;
         else{
             double slope = getSlope(a,b);
-            //TODO: bug
-            return new Point(a.x + abDistance*slope,a.y + abDistance*slope);
+            if(slope == Double.NEGATIVE_INFINITY){
+                return new Point(a.x, a.y + distance) ;
+            }
+            double base = Math.sqrt(Math.pow(distance,2)/(Math.pow(slope,2)+1));
+
+            base = slope >= 0 ? - base : base;
+
+            return new Point(a.x + base,a.y + base*slope);
         }
     }
 
     private static double getSlope(Point a, Point b){
-        if(a.x == b.x)
-            return 0.5;
-        if(a.y == b.y)
-            return 0;
         return (a.y -b.y)/(a.x - b.x);
     }
 
@@ -70,8 +73,8 @@ public class SplitPolygon {
     public static void main(String[] args) {
         List<Point> points = new LinkedList<Point>();
         points.add(new Point(0.0,0.0));
-        points.add(new Point(0.0,5.0));
-        points.add(new Point(5.0,0.0));
+        points.add(new Point(0.0,3.0));
+        points.add(new Point(4.0,0.0));
 
         List<Point> splitPoints = split(points,5);
 
