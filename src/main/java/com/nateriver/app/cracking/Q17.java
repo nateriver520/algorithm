@@ -2,6 +2,7 @@ package com.nateriver.app.cracking;
 
 import com.nateriver.app.utils.PrintUtil;
 
+
 /**
  * Write an algorithm such that if an element in an MxN matrix is 0, its entire row and column is set to 0.
  */

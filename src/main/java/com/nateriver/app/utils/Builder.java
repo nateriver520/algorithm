@@ -35,10 +35,10 @@ public class Builder {
             node = node.next;
             node.next = null;
             index ++;
-            if(index == position)
+            if(index.equals(position))
                 positionNode = tempNode;
         }
-        return new Pair<SingleLink, SingleLink>(head,positionNode);
+        return new Pair<>(head,positionNode);
     }
 
     public static Pair<SingleLink,SingleLink> singleLinkCircleBuilder(String[] values, Integer position){
@@ -59,7 +59,7 @@ public class Builder {
             node = node.next;
             node.next = null;
             index ++;
-            if(index == position)
+            if(index.equals(position))
                 positionNode = tempNode;
             if(index == values.length)
                 endPoint = tempNode;
@@ -67,6 +67,6 @@ public class Builder {
 
         endPoint.next = positionNode;
 
-        return new Pair<SingleLink, SingleLink>(head,positionNode);
+        return new Pair<>(head,positionNode);
     }
 }

@@ -1,6 +1,11 @@
 package com.nateriver.app.utils;
 
 import com.nateriver.app.models.SingleLink;
+import com.nateriver.app.models.TreeNode;
+
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.Queue;
 
 /**
  * Created with IntelliJ IDEA.
@@ -31,6 +36,33 @@ public class PrintUtil {
         }
 
         System.out.println();
+
+    }
+
+
+    public static void printTree(TreeNode root) {
+        Queue<TreeNode> currentLevel = new LinkedList<TreeNode>();
+        Queue<TreeNode> nextLevel = new LinkedList<TreeNode>();
+
+        currentLevel.add(root);
+
+        while (!currentLevel.isEmpty()) {
+            Iterator<TreeNode> iter = currentLevel.iterator();
+            while (iter.hasNext()) {
+                TreeNode currentNode = iter.next();
+                if (currentNode.left != null) {
+                    nextLevel.add(currentNode.left);
+                }
+                if (currentNode.right != null) {
+                    nextLevel.add(currentNode.right);
+                }
+                System.out.print(currentNode.value + " ");
+            }
+            System.out.println();
+            currentLevel = nextLevel;
+            nextLevel = new LinkedList<>();
+
+        }
 
     }
 
