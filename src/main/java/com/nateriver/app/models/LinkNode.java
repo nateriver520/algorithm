@@ -7,7 +7,7 @@ package com.nateriver.app.models;
  * Time: 11:05 PM
  * To change this template use File | Settings | File Templates.
  */
-public class SingleLink {
+public class LinkNode {
     public String value;
-    public SingleLink next;
+    public LinkNode next;
 }

@@ -1,6 +1,6 @@
 package com.nateriver.app.cracking;
 
-import com.nateriver.app.models.SingleLink;
+import com.nateriver.app.models.LinkNode;
 import com.nateriver.app.utils.Builder;
 
 /**
@@ -14,12 +14,12 @@ public class Q22 {
      * then go together
      * first will be the last n
      */
-    public static SingleLink getLastN(Integer n, SingleLink head){
+    public static LinkNode getLastN(Integer n, LinkNode head){
         if(head ==null || head.next ==null)
             return  null;
 
-        SingleLink first = head;
-        SingleLink second = head;
+        LinkNode first = head;
+        LinkNode second = head;
 
         for(int i =0; i < n; i++){
             if(second.next == null)
@@ -37,8 +37,8 @@ public class Q22 {
 
 
     public static void main(String[] args) {
-        SingleLink head = Builder.singleLinkBuilder(new String[]{"a", "b", "c", "f", "e", "d", "a"});
-        SingleLink result = getLastN(3,head);
+        LinkNode head = Builder.singleLinkBuilderWithHead(new String[]{"a", "b", "c", "f", "e", "d", "a"});
+        LinkNode result = getLastN(3,head);
         System.out.println("result is " + result.value);
     }
 

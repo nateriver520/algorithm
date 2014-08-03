@@ -1,4 +1,4 @@
-package com.nateriver.app.leecode;
+package com.nateriver.app.leetcode;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
