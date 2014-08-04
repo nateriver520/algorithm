@@ -1,9 +1,8 @@
 package com.nateriver.app.utils;
 
-import com.nateriver.app.models.SingleLink;
+import com.nateriver.app.models.LinkNode;
 import com.nateriver.app.models.TreeNode;
 
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -16,20 +15,37 @@ import java.util.Queue;
  */
 public class PrintUtil {
     public static void printMatrix(Object[][] matrix){
-        for(int i =0 ;i < matrix.length; i++){
-            Object[] arr = matrix[i];
-            for(Object a: arr)
-                System.out.print(a.toString()+", ");
+        for (Object[] arr : matrix) {
+            for (Object a : arr)
+                System.out.print(a.toString() + ", ");
             System.out.println();
         }
     }
 
-    public static void printSingleLink(SingleLink head){
+    public static void printSingleLinkWithHead(LinkNode head){
         if (head ==null || head.next ==null)
             return;
-        SingleLink node = head;
+        LinkNode node = head;
         while (node.next != null){
-            SingleLink nextNode = node.next;
+            LinkNode nextNode = node.next;
+            System.out.print(nextNode.value);
+            System.out.print(" => ");
+            node = node.next;
+        }
+
+        System.out.println();
+
+    }
+
+    public static void printSingleLinkWithNoHead(LinkNode head){
+        if (head ==null)
+            return;
+        LinkNode node = head;
+        System.out.print(node.value);
+        System.out.print(" => ");
+
+        while (node.next != null){
+            LinkNode nextNode = node.next;
             System.out.print(nextNode.value);
             System.out.print(" => ");
             node = node.next;
@@ -41,15 +57,13 @@ public class PrintUtil {
 
 
     public static void printTree(TreeNode root) {
-        Queue<TreeNode> currentLevel = new LinkedList<TreeNode>();
-        Queue<TreeNode> nextLevel = new LinkedList<TreeNode>();
+        Queue<TreeNode> currentLevel = new LinkedList<>();
+        Queue<TreeNode> nextLevel = new LinkedList<>();
 
         currentLevel.add(root);
 
         while (!currentLevel.isEmpty()) {
-            Iterator<TreeNode> iter = currentLevel.iterator();
-            while (iter.hasNext()) {
-                TreeNode currentNode = iter.next();
+            for (TreeNode currentNode : currentLevel) {
                 if (currentNode.left != null) {
                     nextLevel.add(currentNode.left);
                 }
