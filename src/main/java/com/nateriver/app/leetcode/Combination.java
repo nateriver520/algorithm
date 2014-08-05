@@ -23,7 +23,7 @@ import java.util.Stack;
 public class Combination {
 
     private static List<List<Integer>> numbers = new ArrayList<>();
-    public static List<List<Integer>> getCombineArray(int n, int k){
+    public static List<List<Integer>> combine(int n, int k){
 
         pickNumber(n, k, 1,new Stack<Integer>());
         return numbers;
@@ -48,7 +48,7 @@ public class Combination {
     }
 
     public static void main(String[] args) {
-        getCombineArray( 4 ,2);
+        combine(4, 2);
         for(List<Integer> list : numbers){
             System.out.println(list);
         }

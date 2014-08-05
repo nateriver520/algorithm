@@ -13,7 +13,7 @@ import com.nateriver.app.utils.PrintUtil;
  return 4->5->1->2->3->NULL.
  */
 public class RotateList {
-    public static LinkNode rotate(LinkNode head, int k){
+    public static LinkNode rotate(LinkNode head, int n){
         if(head == null)
             return null;
 
@@ -24,12 +24,12 @@ public class RotateList {
             length ++;
         }
 
-        k = k%length;
-        if(k == 0) return head;
+        n = n%length;
+        if(n == 0) return head;
 
         cur.next = head;
         LinkNode breakPoint = head;
-        for(int i =0; i < length - k -1; i++){
+        for(int i =0; i < length - n -1; i++){
             breakPoint = breakPoint.next;
         }
 

@@ -24,19 +24,19 @@ import java.util.Map;
 
 
 public class WordSearch {
-    public static boolean exist(char[][] board, int i, int j,  String word, int offset, Map<String,Integer> stepHash ){
+    public static boolean isExist(char[][] board, int i, int j, String word, int offset, Map<String, Integer> stepHash){
         if(offset == word.length()) return true;
         if(i < 0 || j <0 || i > board.length - 1 || j > board[i].length -1|| stepHash.containsKey(i + "" + j) || board[i][j] != word.toCharArray()[offset])
             return false;
 
         stepHash.put(i + "" + j, 1);
-        if(exist(board,i -1,j,word,offset + 1, stepHash) || exist(board,i + 1,j,word,offset + 1, stepHash) ||exist(board,i,j -1,word,offset + 1, stepHash) ||exist(board, i ,j + 1 ,word,offset + 1, stepHash) )
+        if(isExist(board, i - 1, j, word, offset + 1, stepHash) || isExist(board, i + 1, j, word, offset + 1, stepHash) || isExist(board, i, j - 1, word, offset + 1, stepHash) || isExist(board, i, j + 1, word, offset + 1, stepHash) )
             return true;
         stepHash.remove(i + "" + j);
         return false;
     }
 
-    public static boolean search(char[][] board, String word){
+    public static boolean exist(char[][] board, String word){
         int n = board.length;
         int m = board[0].length;
 
@@ -44,7 +44,7 @@ public class WordSearch {
             for(int j=0; j < m; j++){
                 if(board[i][j] == word.toCharArray()[0]){
                     Map<String,Integer> ways = new HashMap<>();
-                    if(exist(board, i,j, word, 0, ways))
+                    if(isExist(board, i, j, word, 0, ways))
                         return true;
                 }
             }
@@ -59,8 +59,8 @@ public class WordSearch {
                 {'S', 'F', 'C', 'S'},
                 {'A','D','E','E'},
         };
-        System.out.println(search(board,"ABCCED"));
-        System.out.println(search(board,"SEE"));
-        System.out.println(search(board,"ABCB"));
+        System.out.println(exist(board, "ABCCED"));
+        System.out.println(exist(board, "SEE"));
+        System.out.println(exist(board, "ABCB"));
     }
 }

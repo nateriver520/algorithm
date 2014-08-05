@@ -30,12 +30,12 @@ import com.nateriver.app.utils.PrintUtil;
 
  */
 public class FlattenBinaryTree {
-    public static TreeNode flatten(TreeNode root){
+    public TreeNode start(TreeNode root){
         if(root == null) return null;
         TreeNode left = root.left;
         TreeNode right = root.right;
 
-        root.right = flatten(left);
+        root.right = start(left);
         root.left = null;
 
         if(right == null) return root;
@@ -45,8 +45,12 @@ public class FlattenBinaryTree {
             cur = cur.right;
         }
 
-        cur.right = flatten(right);
+        cur.right = start(right);
         return root;
+    }
+
+    public void flatten(TreeNode node){
+        start(node);
     }
 
     public static void main(String[] args) throws Exception {
@@ -58,8 +62,9 @@ public class FlattenBinaryTree {
         root.right.right = new TreeNode("6");
         PrintUtil.printTree(root);
 
+        FlattenBinaryTree ft = new FlattenBinaryTree();
 
-        flatten(root);
+        ft.flatten(root);
         PrintUtil.printTree(root);
     }
 }
