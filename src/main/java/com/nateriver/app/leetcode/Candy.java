@@ -10,7 +10,8 @@ package com.nateriver.app.leetcode;
  Children with a higher rating get more candies than their neighbors.
  What is the minimum candies you must give?
 
- 3 1 2 6 9 5
+ 1，5，4，3，2
+ 1  2 1  0  -1
  */
 public class Candy {
     public int candy(int[] ratings) {
@@ -35,6 +36,40 @@ public class Candy {
         return res;
     }
 
+    public int candy2(int[] ratings){
+        if(ratings == null) return  0;
+        int res = 1;
+        int cur = 1;
+        int preCur = 0;
+        int dropCount = 0;
+
+        for(int i = 0; i + 1 < ratings.length; i++){
+            if(ratings[i] < ratings[i+1]){
+                dropCount = 0;
+                cur++;
+                res += cur;
+            }
+            else if(ratings[i] == ratings[i+1]){
+                cur =1;
+                res += cur;
+            }
+            else{
+                if(dropCount == 0){
+                    preCur = cur;
+                }
+                dropCount ++;
+                if(dropCount == 1 & preCur > 1)
+                    res += 1;
+                else if( dropCount < preCur)
+                    res += dropCount;
+                else
+                    res += dropCount + 1;
+                cur =1;
+            }
+        }
+        return  res;
+    }
+
     public void liftDown(int[] ratings, int[] result, int cur){
         if(cur -1 < 0 || cur <= 0) return;
         if(ratings[cur] > ratings[cur-1]) return;
@@ -47,6 +82,7 @@ public class Candy {
 
     public static void main(String[] args) {
         Candy c = new Candy();
-        c.candy(new int[] { 1,1,2,6, 9,5});
+        System.out.println(c.candy(new  int[] {2,1,1,3,2,41,1,1,1,2,5,9,5,3,1}));
+        System.out.println(c.candy2(new  int[] {2,1,1,3,2,41,1,1,1,2,5,9,5,3,1}));
     }
 }
