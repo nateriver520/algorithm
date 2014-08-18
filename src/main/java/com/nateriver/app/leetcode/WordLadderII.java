@@ -22,77 +22,113 @@ import java.util.*;
  * All words have the same length.
  * All words contain only lowercase alphabetic characters.
  */
+
+//TODO: use version http://blog.csdn.net/perfect8886/article/details/19645691
+//TODO: need realize myself
 public class WordLadderII {
-    private Map<String, Integer> dicHash = new HashMap<>();
-    private List<List<String>> res = new LinkedList<>();
-    private int minLen =- 1;
+    class WordWithLevel {
+        String word;
+        int level;
 
-    public List<List<String>> findLadders(String start, String end, Set<String> dict) {
-
-        buildDicHash(dict,start,end);
-        char[] startChars = start.toCharArray();
-        char[] endChars = end.toCharArray();
-        Stack<String> s = new Stack<>();
-        s.push(start);
-        transform(startChars, endChars, s);
-        return filter(res);
+        public WordWithLevel(String word, int level) {
+            this.word = word;
+            this.level = level;
+        }
     }
 
-    public void transform(char[] start, char[] end, Stack<String> words){
-        if(minLen != -1 && words.size() > minLen) return;
-        if( !dicHash.containsKey(String.valueOf(start)))
-            return;
+    private String end;
+    private ArrayList<ArrayList<String>> result;
+    private Map<String, List<String>> nextMap;
 
-        if(String.valueOf(start).equals(String.valueOf(end))){
-            if(minLen ==-1)
-                minLen = words.size();
-            else if(words.size() < minLen)
-                minLen = words.size();
+    public ArrayList<ArrayList<String>> findLadders(String start, String end,
+                                                    HashSet<String> dict) {
+        result = new ArrayList<>();
+        this.end = end;
 
-            List<String> temp = new LinkedList<>();
-            for (String w : words) {
-                temp.add(w);
-            }
-            res.add(temp);
-            return;
+        // unvisited words set
+        Set<String> unVisited = new HashSet<>();
+        unVisited.addAll(dict);
+        unVisited.add(start);
+        unVisited.remove(end);
+
+        // used to record the map info of <word : the words of next level>
+        nextMap = new HashMap<>();
+        for (String e : unVisited) {
+            nextMap.put(e, new ArrayList<String>());
         }
 
-        for(int i = 0; i < start.length; i++) {
-            for (char a = 'a'; a <= 'z'; a++) {
-                char replaceChar = start[i];
-                start[i] = a;
-                String next = String.valueOf(start);
-                if(!words.contains(next)){
-                    words.push(next);
-                    transform(start, end, words);
-                    words.pop();
+        // BFS to search from the end to start
+        Queue<WordWithLevel> queue = new LinkedList<>();
+        queue.add(new WordWithLevel(end, 0));
+        boolean found = false;
+        int finalLevel = Integer.MAX_VALUE;
+        int currentLevel;
+        int preLevel = 0;
+        Set<String> visitedWordsInThisLevel = new HashSet<>();
+        while (!queue.isEmpty()) {
+            WordWithLevel wordWithLevel = queue.poll();
+            String word = wordWithLevel.word;
+            currentLevel = wordWithLevel.level;
+            if (found && currentLevel > finalLevel) {
+                break;
+            }
+            if (currentLevel > preLevel) {
+                unVisited.removeAll(visitedWordsInThisLevel);
+            }
+            preLevel = currentLevel;
+            char[] wordCharArray = word.toCharArray();
+            for (int i = 0; i < word.length(); ++i) {
+                char originalChar = wordCharArray[i];
+                boolean foundInThisCycle = false;
+                for (char c = 'a'; c <= 'z'; ++c) {
+                    wordCharArray[i] = c;
+                    String newWord = new String(wordCharArray);
+                    if (c != originalChar && unVisited.contains(newWord)) {
+                        nextMap.get(newWord).add(word);
+                        if (newWord.equals(start)) {
+                            found = true;
+                            finalLevel = currentLevel;
+                            foundInThisCycle = true;
+                            break;
+                        }
+                        if (visitedWordsInThisLevel.add(newWord)) {
+                            queue.add(new WordWithLevel(newWord,
+                                    currentLevel + 1));
+                        }
+                    }
                 }
-                start[i] = replaceChar;
+                if (foundInThisCycle) {
+                    break;
+                }
+                wordCharArray[i] = originalChar;
             }
         }
-    }
 
-    public void buildDicHash(Set<String> dic ,String start, String end) {
-        dicHash.put(start,1);
-        dicHash.put(end,1);
-        for (String w : dic) {
-            dicHash.put(w, 1);
+        if (found) {
+            // dfs to get the paths
+            ArrayList<String> list = new ArrayList<>();
+            list.add(start);
+            getPaths(start, list, finalLevel + 1);
         }
+        return result;
     }
 
-    public List<List<String>> filter(List<List<String>> res){
-        List<List<String>> temp = new LinkedList<>();
-        for(List<String> words : res){
-            if(words.size() == minLen){
-                temp.add(words);
+    private void getPaths(String currentWord, ArrayList<String> list, int level) {
+        if (currentWord.equals(end)) {
+            result.add(new ArrayList<>(list));
+        } else if (level > 0) {
+            List<String> parentsSet = nextMap.get(currentWord);
+            for (String parent : parentsSet) {
+                list.add(parent);
+                getPaths(parent, list, level - 1);
+                list.remove(list.size() - 1);
             }
         }
-        return temp;
     }
 
     public static void main(String[] args) {
         WordLadderII ladder = new WordLadderII();
-        Set<String> dic = new HashSet<>();
+        HashSet<String> dic = new HashSet<>();
 
         dic.add("hot");
         dic.add("dot");
