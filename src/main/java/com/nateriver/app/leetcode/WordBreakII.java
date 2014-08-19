@@ -14,38 +14,50 @@ import java.util.*;
  A solution is ["cats and dog", "cat sand dog"].
  */
 public class WordBreakII {
-    List<String> matchWords = new LinkedList<>();
     public List<String> wordBreak(String s, Set<String> dict) {
-        if(s.trim().equals("")) return matchWords;
-        int maxDicLen = -1;
-        for(String d : dict){
-            if(d.length()>maxDicLen)
-                maxDicLen = d.length();
+        if(s.trim().equals("")) return new ArrayList<>();
+        if(!hasMatch(s,dict)) return new ArrayList<>();
+        HashMap<Integer,List<String>> canHash = new HashMap<>();
+
+        canHash.put(0, new ArrayList<String>());
+        for(int i = 1; i <= s.length(); i++){
+            for(int j = 0; j < i; j++){
+                String judge = s.substring(j,i);
+                if(canHash.containsKey(j) && dict.contains(judge)){
+                    if(!canHash.containsKey(i))
+                        canHash.put(i, new ArrayList<String>());
+                    if(j == 0) canHash.get(i).add(judge);
+                    for (String match : canHash.get(j)){
+                        canHash.get(i).add(match + " " + judge);
+                    }
+                }
+            }
         }
-        match(s,0,dict,maxDicLen,new Stack<String>());
-        return matchWords;
+
+        return canHash.containsKey(s.length())? canHash.get(s.length()): new ArrayList<String>();
     }
 
 
-    public void match(String s, int offset, Set<String> dict, int maxDicLen, Stack<String> stack){
-        if(offset == s.length()){
-            String res = "";
-            // find match
-            for(String sub : stack){
-                res += sub + " ";
-            }
-            matchWords.add(res.trim());
+    public boolean hasMatch(String s, Set<String> dict){
+        if(s.length() == 0) {
+            return false;
         }
-        int end = offset + maxDicLen > s.length() ? s.length() : offset + maxDicLen;
-        for(int i = end; i >= offset; i--){
-            String judge = s.substring(offset,i);
-            if(dict.contains(judge)){
-                stack.push(judge);
-                match(s, i, dict, maxDicLen, stack);
-                stack.pop();
+        boolean[] canBreak = new boolean[s.length()+1];
+        canBreak[0] = true;
+        for(int i=1; i<=s.length(); i++) {
+            boolean flag = false;
+            for(int j=0; j<i; j++) {
+                if(canBreak[j] && dict.contains(s.substring(j, i))) {
+                    flag = true;
+                    break;
+                }
             }
+            canBreak[i] = flag;
         }
+
+        return canBreak[s.length()];
     }
+
 
     public static void main(String[] args) {
         Set<String> dict = new HashSet<>();
