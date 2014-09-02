@@ -56,6 +56,7 @@ public class Subsets {
     public static void main(String[] args) throws Exception {
         Subsets sub = new Subsets();
         System.out.println(sub.subsets(new int[]{1,2,3}));
+        System.out.println(sub.subsets(new int[]{1,2,2}));
         System.out.println(sub.subsets(new int[]{}));
 
     }
