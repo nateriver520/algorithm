@@ -22,6 +22,15 @@ public class PrintUtil {
         }
     }
 
+    public static void printMatrix(int[][] matrix){
+        for (int[] arr : matrix) {
+            for (int a : arr)
+                System.out.print(a + ", ");
+            System.out.println();
+        }
+        System.out.println();
+    }
+
     public static void printSingleLinkWithHead(LinkNode head){
         if (head ==null || head.next ==null)
             return;
