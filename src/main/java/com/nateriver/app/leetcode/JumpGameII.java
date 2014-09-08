@@ -15,22 +15,28 @@ package com.nateriver.app.leetcode;
  * <p/>
  * The minimum number of jumps to reach the last index is 2. (Jump 1 step from index 0 to 1, then 3 steps to the last index.)
  */
+
+/**
+ * http://blog.csdn.net/AIvin24/article/details/33774891
+ */
 public class JumpGameII {
     public int jump(int[] A) {
         int[] jumpStep = new int[A.length];
-        jumpStep[jumpStep.length - 1] = 1;
-        for (int i = A.length - 2; i >= 0; i--) {
-            int canStep = A[i];
-            int minStep = Integer.MAX_VALUE;
-            for (int j = i; j <= i + canStep & j < A.length; j++) {
-                if (jumpStep[j] == 0) continue;
-                if (jumpStep[j] + 1 < minStep)
-                    minStep = jumpStep[j] + 1;
-            }
-            jumpStep[i] = minStep;
-        }
+        for (int i = 0; i < jumpStep.length; i++)
+            jumpStep[i] = Integer.MAX_VALUE;
+        jumpStep[0] = 0;
 
-        return jumpStep[0] - 1;
+        for(int i = 1; i < jumpStep.length; i++){
+            for(int j = 0; j < i; j++){
+                if(A[j] + j >= i){
+                    if(jumpStep[j] + 1 < jumpStep[i]){
+                        jumpStep[i] = jumpStep[j] +1;
+                        break;
+                    }
+                }
+            }
+        }
+        return jumpStep[jumpStep.length - 1];
     }
 
     public static void main(String[] args) throws Exception {
