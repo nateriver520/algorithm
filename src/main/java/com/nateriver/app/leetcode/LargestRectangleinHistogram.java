@@ -1,5 +1,7 @@
 package com.nateriver.app.leetcode;
 
+import java.util.Stack;
+
 /**
  * https://oj.leetcode.com/problems/largest-rectangle-in-histogram/
  * Given n non-negative integers representing the histogram's bar height where the width of each bar is 1,
@@ -16,24 +18,28 @@ package com.nateriver.app.leetcode;
  * return 10.
  */
 public class LargestRectangleinHistogram {
+    /**
+     * Answer : http://www.cnblogs.com/avril/archive/2013/08/24/3278873.html
+     */
     public int largestRectangleArea(int[] height) {
-        if (height.length == 0) return 0;
-        int[] maxArea = new int[height.length];
-        maxArea[0] = height[0];
-        for (int i = 1; i < height.length; i++) {
-            maxArea[i] = height[i];
-            int curHeight = height[i];
-            for (int j = i - 1; j >= 0; j--) {
-                curHeight = Math.min(height[j], curHeight);
-                int curArea = (i - j + 1) * curHeight;
-                if (curArea >= maxArea[i])
-                    maxArea[i] = curArea;
-                else
-                    break;
+        int area = 0;
+        Stack<Integer> stack = new Stack<>();
+        for (int i = 0; i < height.length; i++) {
+            if (stack.empty() || height[stack.peek()] < height[i]) {
+                stack.push(i);
+            } else {
+                int start = stack.pop();
+                int width = stack.empty() ? i : i - stack.peek() - 1;
+                area = Math.max(area, height[start] * width);
+                i--;
             }
-            maxArea[i] = maxArea[i] > maxArea[i - 1] ? maxArea[i] : maxArea[i - 1];
         }
-        return maxArea[height.length - 1];
+        while (!stack.empty()) {
+            int start = stack.pop();
+            int width = stack.empty() ? height.length : height.length - stack.peek() - 1;
+            area = Math.max(area, height[start] * width);
+        }
+        return area;
     }
 
     public static void main(String[] args) {
