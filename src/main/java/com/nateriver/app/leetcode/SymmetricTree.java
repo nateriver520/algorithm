@@ -1,8 +1,5 @@
 package com.nateriver.app.leetcode;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * Given a binary tree, check whether it is a mirror of itself (ie, symmetric around its center).
  * <p/>
@@ -27,55 +24,16 @@ import java.util.List;
 public class SymmetricTree {
     public boolean isSymmetric(TreeNode root) {
         if (root == null) return true;
-        List<Integer> l1 = new ArrayList<>();
-        List<Integer> l2 = new ArrayList<>();
-        List<Integer> r1 = new ArrayList<>();
-        List<Integer> r2 = new ArrayList<>();
-
-        preLOrder(root.left, l1);
-        preROrder(root.right, r1);
-
-        llOrder(root.left, l2);
-        rrOrder(root.right, r2);
-        return l1.equals(r1) && l2.equals(r2);
+        return check(root.left,root.right);
     }
 
-    public void preLOrder(TreeNode root, List<Integer> l) {
-        if (root == null) {
-            return;
-        }
-        l.add(root.val);
-        preLOrder(root.left, l);
-        preLOrder(root.right, l);
-    }
+    public boolean check(TreeNode l, TreeNode r){
+        if(l == null & r != null || l != null & r == null) return false;
+        if(l == null & r == null) return true;
+        if(l.val != r.val) return false;
 
-    public void preROrder(TreeNode root, List<Integer> l) {
-        if (root == null) {
-            return;
-        }
-        l.add(root.val);
-        preROrder(root.right, l);
-        preROrder(root.left, l);
+        return check(l.left, r.right) && check(l.right, r.left);
     }
-
-    public void llOrder(TreeNode root, List<Integer> l) {
-        if (root == null) {
-            return;
-        }
-        llOrder(root.left, l);
-        l.add(root.val);
-        llOrder(root.right, l);
-    }
-
-    public void rrOrder(TreeNode root, List<Integer> l) {
-        if (root == null) {
-            return;
-        }
-        rrOrder(root.right, l);
-        l.add(root.val);
-        rrOrder(root.left, l);
-    }
-
 
     public static void main(String[] args) {
         TreeNode root = new TreeNode(1);
