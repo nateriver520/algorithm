@@ -9,13 +9,17 @@ package com.nateriver.app.leetcode;
  */
 public class ContainerWithMostWater {
     public int maxArea(int[] height) {
+        int l = 0;
+        int r = height.length -1;
         int max = Integer.MIN_VALUE;
-        for(int i = 0; i < height.length -1; i++)
-            for(int j = i+1; j < height.length; j++){
-                int area = (j-i) * Math.min(height[i],height[j]);
-                if(area > max)
-                    max = area;
-            }
+
+        while (l < r){
+            max = Math.max(Math.min(height[l], height[r])* (r-l), max);
+            if(height[l] < height[r])
+                l++;
+            else
+                r--;
+        }
 
         return max;
     }
