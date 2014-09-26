@@ -1,5 +1,7 @@
 package com.nateriver.app.leetcode;
 
+import com.nateriver.app.models.Interval;
+
 import java.util.*;
 
 /**
@@ -76,14 +78,3 @@ public class MergeIntervals {
     }
 }
 
-class Interval{
-    public int start;
-    public int end;
-    Interval() { start = 0; end = 0; }
-    Interval(int s, int e) { start = s; end = e; }
-
-    @Override
-    public String toString(){
-        return "[" + this.start + "," + this.end + "]";
-    }
-}
