@@ -23,51 +23,56 @@ import java.util.List;
  * ".Q.."]
  * ]
  */
-public class NQueens {
-    List<String[]> res = new ArrayList<>();
 
-    public List<String[]> solveNQueens(int n) {
-        if (n <= 0) return res;
-        help(new boolean[n], new String[n], 0, n);
+/**
+ *  Great answer
+ *  http://blog.csdn.net/yyz20002008/article/details/38016597
+ */
+public class NQueens {
+    public ArrayList<String[]> solveNQueens(int n) {
+        ArrayList<String[]> res = new ArrayList<>();
+        helper(n, 0, new int[n], res);
         return res;
     }
 
-    public void help(boolean[] check, String[] sol, int cur, int n) {
-
-        if (cur == n) {
-            //find one solution
-            res.add(sol.clone());
+    private void helper(int n, int row, int[] columnForRow, ArrayList<String[]> res) {
+        if (row == n) {
+            String[] item = new String[n];
+            for (int i = 0; i < n; i++) {
+                StringBuilder strRow = new StringBuilder();
+                for (int j = 0; j < n; j++) {
+                    if (columnForRow[i] == j)
+                        strRow.append('Q');
+                    else
+                        strRow.append('.');
+                }
+                item[i] = strRow.toString();
+            }
+            res.add(item);
             return;
         }
-
         for (int i = 0; i < n; i++) {
-            if (check[i]) continue;
-            sol[cur] = generateRow(i, n);
-            //mark check
-            check[i] = true;
-            help(check, sol, cur + 1, n);
-            check[i] = false;
+            columnForRow[row] = i;
+            if (check(row, columnForRow)) {
+                helper(n, row + 1, columnForRow, res);
+            }
         }
-
     }
 
-    public String generateRow(int pos, int n) {
-        String res = "";
-        for (int i = 0; i < n; i++) {
-            if (i == pos)
-                res += "Q";
-            else
-                res += ".";
+    private boolean check(int row, int[] columnForRow) {
+        for (int i = 0; i < row; i++) {
+            if (columnForRow[row] == columnForRow[i] || Math.abs(columnForRow[row] - columnForRow[i]) == row - i)
+                return false;
         }
-        return res;
+        return true;
     }
 
     public static void main(String[] args) throws Exception {
         NQueens nq = new NQueens();
-        List<String[]> res = nq.solveNQueens(8);
-
-        for(String[] sArray : res){
-            for(String s: sArray){
+        List<String[]> res = nq.solveNQueens(4);
+        System.out.println("res -> " + res.size());
+        for (String[] sArray : res) {
+            for (String s : sArray) {
                 System.out.println(s);
             }
             System.out.println("===============");
