@@ -1,6 +1,6 @@
 package com.nateriver.app.leetcode;
 
-import com.nateriver.app.utils.PrintUtil;
+import com.nateriver.app.utils.PrintHelper;
 
 /**
  * https://oj.leetcode.com/problems/set-matrix-zeroes/
@@ -82,6 +82,6 @@ public class SetMatrixZeroes {
         };
         sz.setZeroes(m);
         System.out.println();
-        PrintUtil.printMatrix(m);
+        PrintHelper.printMatrix(m);
     }
 }

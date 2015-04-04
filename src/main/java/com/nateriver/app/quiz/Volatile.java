@@ -2,13 +2,12 @@ package com.nateriver.app.quiz;
 
 
 public class Volatile {
-    private static  boolean stop = false;
-
+    private static boolean stop = false;
 
 
     public static void main(String[] args) throws Exception {
-        Thread t = new Thread(){
-            int i=0;
+        Thread t = new Thread() {
+            int i = 0;
 
             @Override
             public void run() {
@@ -21,7 +20,7 @@ public class Volatile {
         t.start();
 
         Thread.sleep(100);
-        stop =true;
+        stop = true;
         System.out.println("Main: exit");
     }
 }

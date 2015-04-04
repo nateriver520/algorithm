@@ -13,7 +13,7 @@ import java.util.Queue;
  * Time: 12:26 AM
  * To change this template use File | Settings | File Templates.
  */
-public class PrintUtil {
+public class PrintHelper {
     public static void printMatrix(Object[][] matrix){
         for (Object[] arr : matrix) {
             for (Object a : arr)

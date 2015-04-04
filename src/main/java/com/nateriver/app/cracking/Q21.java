@@ -2,7 +2,7 @@ package com.nateriver.app.cracking;
 
 import com.nateriver.app.models.LinkNode;
 import com.nateriver.app.utils.Builder;
-import com.nateriver.app.utils.PrintUtil;
+import com.nateriver.app.utils.PrintHelper;
 
 import java.util.HashMap;
 
@@ -63,9 +63,9 @@ public class Q21 {
     public static void main(String[] args) {
         LinkNode head = Builder.singleLinkBuilderWithHead(new String[]{"a", "b", "c", "c", "a", "d", "a"});
 
-        PrintUtil.printSingleLinkWithHead(head);
+        PrintHelper.printSingleLinkWithHead(head);
         removeDuplicateLink1(head);
-        PrintUtil.printSingleLinkWithHead(head);
+        PrintHelper.printSingleLinkWithHead(head);
 
     }
 

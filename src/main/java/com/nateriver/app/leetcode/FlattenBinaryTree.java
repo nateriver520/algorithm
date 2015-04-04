@@ -1,7 +1,7 @@
 package com.nateriver.app.leetcode;
 
 import com.nateriver.app.models.TreeNode;
-import com.nateriver.app.utils.PrintUtil;
+import com.nateriver.app.utils.PrintHelper;
 
 /**
  Given a binary tree, flatten it to a linked list in-place.
@@ -60,11 +60,11 @@ public class FlattenBinaryTree {
         root.left.left = new TreeNode("3");
         root.left.right = new TreeNode("4");
         root.right.right = new TreeNode("6");
-        PrintUtil.printTree(root);
+        PrintHelper.printTree(root);
 
         FlattenBinaryTree ft = new FlattenBinaryTree();
 
         ft.flatten(root);
-        PrintUtil.printTree(root);
+        PrintHelper.printTree(root);
     }
 }

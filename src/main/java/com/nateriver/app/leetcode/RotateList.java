@@ -2,7 +2,7 @@ package com.nateriver.app.leetcode;
 
 import com.nateriver.app.models.LinkNode;
 import com.nateriver.app.utils.Builder;
-import com.nateriver.app.utils.PrintUtil;
+import com.nateriver.app.utils.PrintHelper;
 
 /**
  Rotate List
@@ -40,9 +40,9 @@ public class RotateList {
 
     public static void main(String[] args) {
         LinkNode head = Builder.singleLinkBuilderWithNoHead(new String[]{"1", "2", "3", "4", "5"});
-        PrintUtil.printSingleLinkWithNoHead(head);
+        PrintHelper.printSingleLinkWithNoHead(head);
 
         LinkNode whead = rotate(head, 2);
-        PrintUtil.printSingleLinkWithNoHead(whead);
+        PrintHelper.printSingleLinkWithNoHead(whead);
     }
 }

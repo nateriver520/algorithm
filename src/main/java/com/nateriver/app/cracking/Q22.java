@@ -14,20 +14,20 @@ public class Q22 {
      * then go together
      * first will be the last n
      */
-    public static LinkNode getLastN(Integer n, LinkNode head){
-        if(head ==null || head.next ==null)
-            return  null;
+    public static LinkNode getLastN(Integer n, LinkNode head) {
+        if (head == null || head.next == null)
+            return null;
 
         LinkNode first = head;
         LinkNode second = head;
 
-        for(int i =0; i < n; i++){
-            if(second.next == null)
+        for (int i = 0; i < n; i++) {
+            if (second.next == null)
                 return null;
             second = second.next;
         }
 
-        while (second != null){
+        while (second != null) {
             first = first.next;
             second = second.next;
         }
@@ -38,11 +38,7 @@ public class Q22 {
 
     public static void main(String[] args) {
         LinkNode head = Builder.singleLinkBuilderWithHead(new String[]{"a", "b", "c", "f", "e", "d", "a"});
-        LinkNode result = getLastN(3,head);
+        LinkNode result = getLastN(3, head);
         System.out.println("result is " + result.value);
     }
-
-
-
-
 }

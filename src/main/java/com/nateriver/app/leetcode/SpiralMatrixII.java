@@ -1,7 +1,7 @@
 package com.nateriver.app.leetcode;
 
 
-import com.nateriver.app.utils.PrintUtil;
+import com.nateriver.app.utils.PrintHelper;
 
 /**
  Given an integer n, generate a square matrix filled with elements from 1 to n2 in spiral order.
@@ -50,7 +50,7 @@ public class SpiralMatrixII {
         SpiralMatrixII sm = new SpiralMatrixII();
         int[][] matrix = sm.generateMatrix(5);
 
-        PrintUtil.printMatrix(matrix);
+        PrintHelper.printMatrix(matrix);
     }
 
 }
